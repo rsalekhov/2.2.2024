@@ -27,11 +27,29 @@ INSERT INTO AlbumArtists (AlbumID, ArtistID) VALUES
 (3, 3), -- Debut - Bjork
 (4, 4); -- White_pony - Deftones
 
+-- Добавление треков
 INSERT INTO Tracks (TrackID, TrackName, Duration, AlbumID) VALUES
 (1, 'Hey_jude', 300, 1),
 (2, 'Strawberry_fields', 270, 1),
 (3, 'Dumb', 180, 2),
-(4, 'Human_behaviour', 240, 3);
+(4, 'Human_behaviour', 240, 3),
+(5, 'my own', 200, 4),
+(6, 'own my', 220, 4),
+(7, 'my', 180, 4),
+(8, 'oh my god', 240, 4),
+(9, 'myself', 210, 4),
+(10, 'by myself', 190, 4),
+(11, 'bemy self', 200, 4),
+(12, 'myself by', 220, 4),
+(13, 'by myself by', 250, 4),
+(14, 'beemy', 170, 4),
+(15, 'premyne', 230, 4),
+(16, 'hey', 190, 4),
+(17, 'hey there', 210, 4),
+(18, 'say hey', 170, 4),
+(19, 'oh hey there', 200, 4),
+(20, 'hey ho', 220, 4);
+
 
 INSERT INTO Compilations (CompilationID, CompilationName, ReleaseYear) VALUES
 (1, 'Anthology', 1995),

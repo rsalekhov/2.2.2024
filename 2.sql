@@ -15,22 +15,30 @@ SELECT ArtistName
 FROM Artists
 WHERE CHAR_LENGTH(ArtistName) - CHAR_LENGTH(REPLACE(ArtistName, ' ', '')) = 0;
 
--- Название треков, которые содержат слово «hey» или «my».
+-- Название треков, которые содержат слово «my» или «hey».
 SELECT TrackName
 FROM Tracks
-WHERE LOWER(TrackName) LIKE '%hey%' OR LOWER(TrackName) LIKE '%my%';
-
-
-
-
-
-
+WHERE 
+  -- Для слова "my"
+  (
+    LOWER(TrackName) = 'my' OR
+    LOWER(TrackName) ILIKE 'my %' OR
+    LOWER(TrackName) ILIKE '% my%' OR
+    LOWER(TrackName) ILIKE '% my %'
+  )
+  OR
+  -- Для слова "hey"
+  (
+    LOWER(TrackName) = 'hey' OR
+    LOWER(TrackName) ILIKE 'hey %' OR
+    LOWER(TrackName) ILIKE '% hey%' OR
+    LOWER(TrackName) ILIKE '% hey %'
+  );
 
 
 SELECT g.GenreName, COUNT(ag.ArtistID) AS ArtistCount
 FROM Genres g
 LEFT JOIN ArtistGenres ag ON g.GenreID = ag.GenreID
-LEFT JOIN Artists a ON ag.ArtistID = a.ArtistID
 GROUP BY g.GenreName;
 
 SELECT COUNT(t.TrackID) AS TrackCount
@@ -47,7 +55,13 @@ SELECT a.ArtistName
 FROM Artists a
 LEFT JOIN AlbumArtists aa ON a.ArtistID = aa.ArtistID
 LEFT JOIN Albums al ON aa.AlbumID = al.AlbumID
-WHERE al.ReleaseYear IS NULL OR al.ReleaseYear != 2020;
+WHERE a.ArtistID NOT IN (
+    SELECT a2.ArtistID
+    FROM Artists a2
+    LEFT JOIN AlbumArtists aa2 ON a2.ArtistID = aa2.ArtistID
+    LEFT JOIN Albums al2 ON aa2.AlbumID = al2.AlbumID
+    WHERE al2.ReleaseYear = 2020
+);
 
 SELECT c.CompilationName
 FROM Compilations c
